@@ -409,11 +409,9 @@ main{padding-top:var(--hdr)}
 .blink{animation:bl 2.6s ease-in-out infinite}
 @keyframes bl{50%{opacity:.25}}
 
-@media (prefers-reduced-motion:reduce){
-  .view.active .reveal{opacity:1;transform:none}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .reveal{opacity:1;transform:none}.bar-r{transform:scaleY(1)}.range i{transform:scaleX(1)}
-}
+html.rm .view.active .reveal{opacity:1;transform:none}
+html.rm *,html.rm *::before,html.rm *::after{animation:none!important;transition:none!important}
+html.rm .reveal{opacity:1;transform:none}html.rm .bar-r{transform:scaleY(1)}html.rm .range i{transform:scaleX(1)}
 @media (min-width:1024px) and (max-height:800px){
  .vhead h2{font-size:clamp(20px,3.4vh,28px)}.vhead{margin-bottom:8px}.eyebrow{font-size:10.5px}
  .screen{padding-top:12px;padding-bottom:10px}
@@ -943,7 +941,7 @@ main > .view{position:relative;z-index:1}
 .bship{transform:translate(-260px,820px);animation:bs 70s linear infinite}
 @keyframes bs{to{transform:translate(1700px,820px)}}
 .home-r,.csg,.card,.ai-stage,.ben-stage,.gwrap,.nxpic,.stc,.jstrip{position:relative}
-@media (prefers-reduced-motion:reduce){.bgfx *{animation:none!important}}
+html.rm .bgfx *{animation:none!important}
 
 /* ===== floating dock nav ===== */
 .topbar .nav,#bMenu,.mnav{display:none!important}
@@ -1013,11 +1011,11 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* auto-hide dock on mouse devices */
 @media (hover:hover) and (pointer:fine) and (min-width:761px){
- .dock{animation:none!important;transition:transform .35s var(--ease),opacity .35s}
+ .dock{animation:none!important;transition:transform .2s ease-out,opacity .18s}
  .dock.hid{transform:translate(-50%,calc(100% + 30px));opacity:0;pointer-events:none}
  .screen{padding-bottom:clamp(14px,2.4vh,26px)!important}
  #v-home .screen{padding-bottom:0!important}
- .dpeek{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:69;width:120px;height:5px;border-radius:9px;background:color-mix(in srgb,var(--text) 28%,transparent);transition:opacity .3s;cursor:pointer}
+ .dpeek{position:fixed;left:50%;bottom:5px;transform:translateX(-50%);z-index:69;width:140px;height:5px;border-radius:9px;background:color-mix(in srgb,var(--text) 28%,transparent);transition:opacity .3s;cursor:pointer}
  .dpeek::before{content:"";position:absolute;inset:-14px -30px -6px}
  body:not(.dockhid) .dpeek{opacity:0;pointer-events:none}
 }
@@ -1031,6 +1029,185 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .fapp:hover{transform:translateY(-2px);border-color:var(--sage)}
 .fapp.on{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}.fapp.on span{background:var(--accent);color:#fff}
 .fapp:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== Target state ===== */
+.cs[hidden],.ts[hidden]{display:none!important}
+.csctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.csr[data-to]::after{content:"→ " attr(data-to);grid-column:2 / 4;grid-row:1;font-size:clamp(12px,1.6vh,13.5px);font-weight:700;color:var(--accent);opacity:0;transform:translateX(-8px);transition:opacity .4s,transform .4s;align-self:baseline}
+.csr[data-to] span,.csr[data-to] em{transition:opacity .3s}
+.csr[data-to] b{grid-row:1;grid-column:1}.csr[data-to] span{grid-row:1;grid-column:2}.csr[data-to] em{grid-row:1;grid-column:3}
+.csr.map[data-to] span,.csr.map[data-to] em{opacity:0}
+.csr.map[data-to]::after{opacity:1;transform:none}
+.cs.mapping .csg.retire-x{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 30%,transparent),var(--shadow)}
+.cs .csg.fly{transition:transform .8s cubic-bezier(.5,0,.3,1),opacity .8s!important;opacity:0!important;pointer-events:none}
+.cs.mapping .cslines{opacity:.25;transition:opacity .5s}
+.cscore .swap{transition:opacity .4s}
+.cs.morphed .cscore{transform:scale(1.04);transition:transform .6s var(--ease)}
+.cs.fadeout{opacity:0;transition:opacity .45s}
+.ts{position:relative;display:grid;grid-template-columns:minmax(210px,.6fr) minmax(0,2fr) minmax(210px,.6fr);grid-template-rows:1fr auto;gap:clamp(10px,1.8vh,18px) clamp(18px,2.6vw,40px);align-items:center;min-height:0;animation:bIn .5s var(--ease) both}
+.ts .tscol{position:relative;z-index:1;display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px)}
+.ts .csr{grid-template-columns:1fr auto;gap:0 8px}.ts .csr span{grid-column:1;grid-row:2}.ts .csr b{grid-column:1}.ts .csr em{grid-column:2;grid-row:1 / 3;align-self:center}
+.ts .csg{cursor:default}.ts .csg:hover{transform:none}
+.tret .tretl{display:flex;flex-wrap:wrap;gap:5px}
+.tret s{font-size:11.5px;color:var(--muted);padding:2px 8px;border-radius:999px;border:1px dashed var(--line2);text-decoration-color:var(--accent);text-decoration-thickness:1.5px}
+.tcore{position:relative;z-index:1;border-radius:20px;padding:clamp(10px,1.6vh,16px);background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 7%,var(--panel)),var(--panel));border:1.5px solid var(--accent);box-shadow:0 26px 50px -30px var(--accent),var(--shadow);display:flex;flex-direction:column;gap:clamp(6px,1.1vh,10px)}
+.tch{display:flex;align-items:baseline;gap:12px;justify-content:space-between}
+.tch small{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);order:2}
+.tch b{font-family:var(--display);font-weight:800;font-size:clamp(20px,3.2vh,28px);color:var(--accent)}
+.tlay{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tlay span{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;text-align:center;padding:clamp(4px,.8vh,7px) 10px;border-radius:10px;background:var(--accent);color:#fff;font-weight:700;font-size:12.5px}
+[data-theme="dark"] .tlay span{color:#0e1214}
+.tlay.base span{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.tlay i,.ti i{font-style:normal;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);white-space:nowrap}
+.tlay span:not(.x) i{background:rgba(255,255,255,.2);color:inherit}.tlay.base i{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.tcaps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tcap{border-radius:12px;background:var(--panel);border:1px solid var(--line);padding:8px;display:flex;flex-direction:column;gap:5px;animation:bIn .5s var(--ease) both;animation-delay:calc(var(--d)*120ms + .15s)}
+.tcap h5{margin:0 0 2px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.ti{border-radius:8px;padding:5px 8px;background:var(--panel2);border:1px solid var(--line);display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.ti b{font-size:12px;line-height:1.25;font-weight:700}
+.ti.new{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:color-mix(in srgb,var(--accent) 6%,var(--panel))}
+.ts.go .ti.new{animation:tiPop .6s var(--ease) both;animation-delay:calc(var(--k)*110ms + .5s)}
+@keyframes tiPop{0%{transform:scale(.9);opacity:0;box-shadow:0 0 0 0 var(--accent)}60%{transform:scale(1.03);opacity:1;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}100%{transform:none;box-shadow:0 0 0 0 transparent}}
+.tool{grid-column:1 / -1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;padding:8px 14px;border-radius:14px;border:1px dashed var(--line2);background:var(--panel);font-size:12.5px;position:relative;z-index:1}
+.tool b{font-family:var(--display);font-size:13px;margin-right:4px}
+.tool span{display:flex;align-items:center;gap:6px;color:var(--muted);padding:3px 10px 3px 4px;border-radius:999px;background:var(--panel2)}
+.tool em{font-style:normal;font-weight:700;color:var(--text);padding:2px 9px;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
+@media (max-height:700px){.tcap{padding:6px;gap:4px}.ti{padding:3px 7px}.ti b{font-size:11.4px}.tlay span{font-size:11.8px}.tool{padding:5px 10px}.tret s{font-size:10.8px;padding:1px 6px}}
+@media (max-width:1023px){.ts{grid-template-columns:1fr}.tcaps{grid-template-columns:1fr 1fr}#tslines{display:none}}
+.wy.opp{border-left-color:var(--accent);background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 6%,var(--panel)),var(--panel))}
+.wylink{font-family:var(--font);font-size:12px;font-weight:700;color:var(--accent);margin-left:10px;text-decoration:none;border-bottom:1px solid currentColor}
+
+/* ===== Target architecture (v34) ===== */
+#ts.ts{display:grid;grid-template-columns:minmax(170px,.42fr) minmax(0,2.2fr) minmax(190px,.5fr);grid-template-rows:auto 1fr;gap:6px clamp(16px,2.4vw,34px);align-items:stretch;padding:8px 10px 6px;border-radius:18px;
+ background-color:var(--panel);background-image:radial-gradient(color-mix(in srgb,var(--text) 14%,transparent) 1px,transparent 1.2px);background-size:16px 16px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.alines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.alines path{fill:none;stroke:var(--sage);stroke-width:1.6}
+.alines path.dash{stroke-dasharray:5 5;animation:flow 1.6s linear infinite}
+.alines text{font-family:var(--mono);font-size:9.5px;fill:var(--faint)}
+.alg{grid-column:1 / -1;display:flex;gap:16px;justify-content:flex-end;font-size:11px;color:var(--muted);position:relative;z-index:1}
+.alg i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.alg i.s{background:var(--accent)}.alg i.f{border:1.5px dashed var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.acol{position:relative;z-index:1;display:flex;flex-direction:column;gap:5px;justify-content:center}
+.acol h5{margin:0 0 2px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.ax{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:9px;background:var(--panel);border:1px solid var(--line);font-size:12px}
+.ax span,.ab2 span{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:var(--panel2);color:var(--muted);flex:none}
+.ax svg,.ab2 svg,.arow svg,.abase svg{width:14px;height:14px}
+.ax b{font-weight:700}.ax .tg{margin-left:auto}
+.aret{margin-top:6px;padding:6px 8px;border-radius:10px;border:1px dashed var(--line2);background:var(--panel)}
+.aret div{display:flex;flex-wrap:wrap;gap:4px}
+.aret s{font-size:10.5px;color:var(--muted);padding:1px 6px;border-radius:999px;background:var(--panel2);text-decoration-color:var(--accent)}
+.astack{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(5px,1vh,9px);min-height:0}
+.arow{display:grid;grid-template-columns:86px repeat(3,1fr);gap:8px;align-items:stretch}
+.arow>span{display:flex;align-items:center;justify-content:center;gap:7px;padding:clamp(3px,.7vh,6px) 8px;border-radius:9px;background:var(--panel);border:1px solid var(--line);font-size:12px;font-weight:600}
+.arow .al{background:none!important;border:0!important;justify-content:flex-start;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-left:0}
+.arow.ux .ak{background:var(--accent);color:#fff;border-color:var(--accent)}[data-theme="dark"] .arow.ux .ak{color:#0e1214}
+.arow.ux .ak.fut{background:color-mix(in srgb,var(--accent) 8%,var(--panel));color:var(--accent);border:1.5px dashed var(--accent)}
+.arow.alm>span:not(.al){background:var(--panel2)}
+.acore{position:relative;flex:0 1 auto;min-height:0;border:2px solid var(--accent);border-radius:14px;padding:clamp(6px,1vh,10px);background:color-mix(in srgb,var(--accent) 5%,var(--panel));display:flex;flex-direction:column;gap:clamp(5px,.9vh,8px);box-shadow:0 20px 40px -28px var(--accent)}
+.ach{display:flex;align-items:baseline;gap:10px}.ach b{font-family:var(--display);font-size:clamp(17px,2.6vh,22px);font-weight:800;color:var(--accent)}.ach small{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.alobs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;min-height:0;align-items:start}
+.alob{display:flex;flex-direction:column;gap:4px;padding:6px;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
+.alob h6{margin:0 0 1px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.ab{display:flex;flex-direction:column;gap:2px;padding:4px 7px;border-radius:7px;background:var(--accent);color:#fff}
+[data-theme="dark"] .ab{color:#0e1214}
+.ab b{font-size:clamp(11.5px,1.5vh,13.5px);line-height:1.2;font-weight:700}
+.ab i{font-style:normal;font-size:9.5px;opacity:.85}
+.ab.fut{background:color-mix(in srgb,var(--accent) 6%,var(--panel));color:var(--text);border:1.5px dashed var(--accent)}
+.ab.fut i{color:var(--accent);opacity:1;font-weight:700}
+.abase{display:grid;grid-template-columns:1fr 1.4fr;gap:7px}
+.abase span{display:flex;align-items:center;justify-content:center;gap:7px;padding:4px 8px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);font-size:11.5px;font-weight:700}
+.abase i{font-style:normal;font-size:9.5px;color:var(--accent);font-weight:700}
+.ab2{display:grid;grid-template-columns:22px 1fr;gap:1px 8px;align-items:center;padding:5px 8px;border-radius:9px;background:var(--panel);border:1px solid var(--line)}
+.ab2 b{font-size:11.5px;line-height:1.2}.ab2 i{grid-column:2;font-style:normal;font-size:9.5px;color:var(--accent);font-weight:700}
+.ab2.fut{border:1.5px dashed var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--panel))}
+.ab2.ext{background:var(--panel2)}
+.ts.go .ab,.ts.go .ab2,.ts.go .ax,.ts.go .arow>span,.ts.go .abase span{animation:bIn .5s var(--ease) both;animation-delay:calc(var(--k,0)*18ms + .1s)}
+.ts.go .acore{animation:corein .7s cubic-bezier(.2,.7,.2,1) both}
+@media (max-height:700px){.ab{padding:3px 6px}.ab b{font-size:10.8px}.ax{padding:3px 7px;font-size:11.2px}.ab2{padding:4px 7px}.arow>span{font-size:11.2px}.alob{gap:3px;padding:5px}}
+@media (max-width:1023px){#ts.ts{grid-template-columns:1fr}.alobs{grid-template-columns:1fr 1fr}.alines{display:none}}
+/* morph caption */
+.csinfo.big{font-size:clamp(14px,2vh,17px);color:var(--text);padding:8px 18px;border-color:var(--accent);white-space:normal;max-width:520px}
+.csinfo.big b{color:var(--accent)}.csinfo .fx{display:inline-block;font-size:10px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:999px;margin-left:8px;vertical-align:2px;border:1px dashed var(--accent);color:var(--accent)}.csinfo .fx.in{background:var(--accent);color:#fff;border-style:solid}
+.csr.now{background:color-mix(in srgb,var(--accent) 10%,transparent);border-radius:8px;box-shadow:0 0 0 2px var(--accent);margin:0 -8px;padding-left:8px;padding-right:8px}
+.csr.gone{transition:transform .9s cubic-bezier(.5,0,.3,1),opacity .9s;opacity:0;pointer-events:none}
+.csg.empty{transition:opacity .6s,transform .6s;opacity:0!important;transform:scale(.92)!important}
+.skipm{margin-left:8px}
+.scopen{font-size:12px;color:var(--muted);padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel)}.scopen b{color:var(--accent)}
+
+.fcaps{grid-template-columns:repeat(3,1fr)!important;gap:6px!important}.fcaps .bcard .bn{display:none!important}.fcaps .bcard{grid-template-columns:1fr!important}
+.fcaps .bcard{padding:6px 10px!important;gap:8px!important;align-items:center}
+.fcaps .bcard .bn{width:26px!important;height:26px!important}.fcaps .bcard .bn svg{width:14px;height:14px}
+.fcaps .bcard b{font-size:12.5px!important;display:inline}.fcaps .bcard span{font-size:11.5px!important;line-height:1.3}
+.fgrp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.fcol{display:flex;flex-direction:column;gap:5px}
+.fcol h6{margin:0;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.fgrp .fapp{grid-template-columns:1fr auto;padding:5px 9px}
+.fgrp .fapp b{font-size:11.8px;line-height:1.25}
+.fgrp .fapp span{grid-row:1;width:22px;height:22px;font-size:9px}
+
+/* ===== Next steps finale ===== */
+#v-next .screen{padding:0!important;overflow:hidden!important}
+#v-next .screen>.wrap{max-width:none;padding:0;height:100%}
+.fin{position:relative;height:100%;width:100%;overflow:hidden;color:#fff;display:flex}
+.fin-bg{position:absolute;inset:0}
+.fin-bg img{width:100%;height:100%;object-fit:cover;object-position:60% 35%;transform:scale(1.12);transition:transform 9s cubic-bezier(.2,.6,.2,1);filter:saturate(.9)}
+#v-next.play .fin-bg img{transform:scale(1.0)}
+.fin-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(0,26,18,.94) 0%,rgba(0,58,42,.86) 45%,rgba(0,88,63,.55) 100%),radial-gradient(circle at 80% 20%,rgba(158,201,170,.25),transparent 50%)}
+.fin-in{position:relative;z-index:1;width:min(1260px,92vw);margin:0 auto;display:flex;flex-direction:column;justify-content:center;gap:clamp(12px,2.6vh,30px);padding:clamp(14px,3vh,40px) 0 clamp(18px,4vh,48px)}
+.fin-top .eyebrow{color:#9ec9aa}
+.fin-top h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,5.4vh,58px);line-height:1.05;margin:8px 0 6px;color:#fff;letter-spacing:-.01em}
+.fin-top h2 em{font-style:normal;background:linear-gradient(90deg,#9ec9aa,#e8f5ec);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fin-top p{margin:0;font-size:clamp(14px,2vh,18px);color:rgba(255,255,255,.78)}
+.fin-track{position:relative;height:14px;margin-right:110px}
+.fin-line{position:absolute;left:0;right:0;top:6px;height:2px;background:rgba(255,255,255,.18);border-radius:2px;overflow:hidden}
+.fin-line i{position:absolute;inset:0;background:linear-gradient(90deg,#9ec9aa,#fff);transform:scaleX(0);transform-origin:0 50%}
+#v-next.play .fin-line i{animation:finLine 2.4s .6s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes finLine{to{transform:scaleX(1)}}
+.fin-flag{position:absolute;right:-110px;top:-6px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:#9ec9aa;color:#001309;opacity:0;transform:scale(.8)}
+#v-next.play .fin-flag{animation:finFlag .6s 2.9s var(--ease) forwards,finPulse 2.4s 3.6s ease-in-out infinite}
+@keyframes finFlag{to{opacity:1;transform:none}}
+@keyframes finPulse{50%{box-shadow:0 0 0 8px rgba(158,201,170,.25)}}
+.fin-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px)}
+.fin-c{position:relative;padding:clamp(14px,2.4vh,26px) clamp(16px,1.6vw,24px);border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);opacity:0;transform:translateY(24px);transition:background .3s,transform .3s}
+#v-next.play .fin-c{animation:finUp .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.5s + var(--i)*.7s)}
+@keyframes finUp{to{opacity:1;transform:none}}
+.fin-c:hover{background:rgba(255,255,255,.13)}
+.fin-c::before{content:"";position:absolute;left:24px;right:24px;top:0;height:3px;border-radius:0 0 3px 3px;background:linear-gradient(90deg,#9ec9aa,transparent)}
+.fin-n{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(8px,1.4vh,14px)}
+.fin-n span{font-family:var(--display);font-weight:800;font-size:clamp(34px,6vh,60px);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.7)}
+.fin-n i{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#9ec9aa;color:#00583f}
+.fin-n i svg{width:22px;height:22px}
+.fin-c h3{margin:0 0 clamp(6px,1.2vh,12px);font-family:var(--display);font-size:clamp(17px,2.6vh,23px);font-weight:700;color:#fff;line-height:1.2}
+.fin-c ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.fin-c li{display:flex;gap:8px;align-items:flex-start;font-size:clamp(13px,1.8vh,15px);color:rgba(255,255,255,.85);line-height:1.35}
+.fin-c li svg{width:16px;height:16px;flex:none;margin-top:2px;color:#9ec9aa}
+.fin-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fin-logos{display:flex;align-items:center;gap:12px}
+.fin-logos .fl{background:#fff;border-radius:12px;padding:7px 12px;display:grid;place-items:center;box-shadow:0 10px 30px -14px rgba(0,0,0,.5)}
+.fin-logos img{height:clamp(22px,3.4vh,32px);width:auto;display:block}
+.fin-logos .fx{color:rgba(255,255,255,.6);font-size:18px}
+.fin-ty{font-family:var(--display);font-weight:800;font-size:clamp(22px,4vh,40px);letter-spacing:-.01em;background:linear-gradient(90deg,#fff,#9ec9aa);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0}
+#v-next.play .fin-ty{animation:finFlag .9s 3.2s var(--ease) forwards}
+@media (max-width:900px){.fin-cards{grid-template-columns:1fr}.fin-track{display:none}#v-next .screen{overflow:auto!important}}
+html.rm .fin-c,html.rm .fin-ty,html.rm .fin-flag{opacity:1!important;transform:none!important;animation:none!important}html.rm .fin-line i{transform:none}
+
+/* ===== Presentation start ===== */
+.present{position:fixed;inset:0;z-index:200;display:grid;place-items:center;color:#fff;transition:opacity .6s,visibility .6s}
+.present.gone{opacity:0;visibility:hidden;pointer-events:none}
+.pr-bg{position:absolute;inset:0;background:radial-gradient(circle at 75% 25%,rgba(158,201,170,.35),transparent 55%),linear-gradient(135deg,#001a12,#00583f 70%,#2f7d5c)}
+.pr-bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1.3px);background-size:22px 22px;mask-image:linear-gradient(180deg,transparent,#000 60%)}
+.pr-in{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(10px,2.4vh,22px);padding:24px;animation:bIn .9s var(--ease) both}
+.pr-in .eyebrow{color:#9ec9aa}
+.pr-in h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(32px,7vh,72px);line-height:1.04;letter-spacing:-.015em;color:#fff}
+.pr-in h1 em{font-style:normal;background:linear-gradient(90deg,#9ec9aa,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pr-logos{display:flex;align-items:center;gap:12px}.pr-logos .fl{background:#fff;border-radius:14px;padding:9px 14px}.pr-logos img{height:clamp(26px,4vh,38px);display:block}.pr-logos .fx{opacity:.6;font-size:20px}
+.pr-go{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:12px;padding:14px 30px;border-radius:999px;background:#9ec9aa;color:#001309;font-weight:800;font-size:clamp(15px,2.2vh,19px);box-shadow:0 18px 40px -14px rgba(0,0,0,.5);transition:transform .2s;animation:finPulse 2.4s 1s ease-in-out infinite}
+.pr-go span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#00583f;color:#fff;font-size:12px}
+.pr-go:hover{transform:translateY(-2px) scale(1.02)}.pr-go:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.pr-skip{all:unset;cursor:pointer;color:rgba(255,255,255,.75);font-size:13px;border-bottom:1px solid rgba(255,255,255,.35)}
+.pr-k{margin:0;font-size:12px;color:rgba(255,255,255,.55);font-family:var(--mono)}
+/* in full screen, use the whole screen */
+:fullscreen .wrap,html.fs .wrap{max-width:min(1600px,96vw)}
 </style>
 </head>
 <body>
@@ -1038,7 +1215,7 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   <a class="cobrand" href="#home" aria-label="Vinmar and KaarTech · Home"><img class="lg-vin" src="data:image/png;base64,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" alt="Vinmar"><span class="sep"></span><img class="lg-kt" src="data:image/png;base64,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" alt="KaarTech"></a>
   <nav class="nav" aria-label="Main">
     <a href="#home" data-nav="home">Home</a>
-    <a href="#current" data-nav="current">Current State</a>
+    <a href="#current" data-nav="current">Current &amp; Target State</a>
     <a href="#benefits" data-nav="benefits">Why S/4HANA &amp; Benefits</a>
     <a href="#plan" data-nav="plan">Project Plan</a>
     <a href="#investment" data-nav="investment">Investment</a>
@@ -1046,15 +1223,27 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   </nav>
   <div class="tools">
     <button class="tbtn" id="bMenu" aria-label="Menu" aria-expanded="false">☰</button>
+    <button class="tbtn" id="bFS" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     <button class="tbtn" id="bTheme" aria-label="Switch light or dark theme"><span id="themeIco">☾</span></button>
   </div>
 </header>
 <nav class="mnav" id="mnav" aria-label="Mobile">
-  <a href="#home" data-nav="home">Home</a><a href="#current" data-nav="current">Current State</a><a href="#benefits" data-nav="benefits">Why S/4HANA &amp; Benefits</a><a href="#plan" data-nav="plan">Project Plan</a><a href="#investment" data-nav="investment">Investment</a><a href="#next" data-nav="next">Next steps</a>
+  <a href="#home" data-nav="home">Home</a><a href="#current" data-nav="current">Current &amp; Target State</a><a href="#benefits" data-nav="benefits">Why S/4HANA &amp; Benefits</a><a href="#plan" data-nav="plan">Project Plan</a><a href="#investment" data-nav="investment">Investment</a><a href="#next" data-nav="next">Next steps</a>
 </nav>
 
 <div class="dpeek" id="dpeek" aria-hidden="true"></div>
-<nav class="dock" aria-label="Sections"><a class="dlogo2" href="#home" aria-label="Home"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAyCAYAAAD1CDOyAAAMbUlEQVR4Xu1aeXBV5RX/ffet2TfIywoJWR5ZDCKEJBiitCJiW2DEoUMLHaRFUbQqpm5jq5Yp1bYudEqn4sKMVC06bRVL6UBVVJYAiiVAQhIgIckjIWRPyMtb7v0657vvvryEvCXIH860P+byMnf5vvM753znnO/cy/ZUH205025LY0wCwMABcYDRf+OA0yUFt80smZeZYNk/9g7OORxOJxo72+6quXD+jYv9PXBzBXowSJzm0IlHFM/43vkEaHAxuyqA98/R5yQOxIaFYXnpfKbXS2C2ns7UNw/sbeVues5Dwuf5sSAxwDmmxE/GirnzmU4SZ64EB2RFQVt/d86x5vr6htZmON0yGAxCQCKhKUsTcYQEB0gIdTaAKeo17RxXsHRm6UMFaVM3M8YhJcfE27KT0qAwrmolAAGProQQLV2X0HypvdyPvcSkOokhLTahYfGMuWxVxaLwaZZUsoHn8DE2yevP8j4UNWtZYuNgTUnbzDzPSIwx3GwtYgZJgkL/mGpqQXp8Bav3SAyH6k59riiKOs+IOj3aY8Ky4gCQGBVjXzangt1aNOt3ej05lyY3hwJZHKq2PZoU0Cwwck5WZJRlWx/S6STPlEy1V0JkNPLSM4U/e7wxJDR1d6L+QvPKkG4m55AkXJ+Z87Nlc2+aF2k2k1cKJgEN4QO6PT0+Dtak1M2+WhMkaJCy7Dxm0umEv9M6okO4ll8zq9b4vL5mu0vx0WIAaMJmxE3af2dpRRIRIWVLQpsBJvKCY15uwRLyGt8nvKtyUkQUZmfk1kCWofNYJFikIle8ONiH+nbbfV6VBiTBRWSjIzk6+uKimcVL9CQQEVECLAsP0uLikTk5eSfdOUKZj5AgzM6yFoQZTcLMfmLOFSCNfFp3YotDcV+xLAKDIyfRsrM4O69GrKsQcPP06+ZRsBiLUbJGh4Vj5tSsep1C2oKIx2pIDewjPYODONHa9IcAd3mghU0aVc1LJVk5BZPCI8R1LaCMdWGFK8iZbEFGQtJ+JvKMLxHPwvbF7Jx8a0xYBJjikTwQAc9wOsZw9EzdeofbFZzHGIQZjJiZnbdd8XHhsdCBYW52Xj6573i4wmuijSYUZuXsIfaBoHGjX7qzc6Afx5vOvRnwoXFAAuSnT/1RpDls3Edp/OzkVKQlJNb6G/sKEpTyZkzNWhgdpprYH8jksudwU6LUSzjYeHrVZcfwRHkg0mBEVkKSN8T7giqC8tz8TD9GELiCBAWvKKMJZbkFL0sylQmho3/YjuMtje+H/oQKmiPTkrx+rOeSi1mTU5ESE9sUyKv9BqG8KRkPx0fFeCfRyPjmDm15jvwyVJ2tWzIwPDRRHkiJifujielEMBF5CoBBp0eFtdCg5gT/6vRLIlynx6ys6VvhE/68RLT4oCUSzy9dH3QM48iZujpiMV414g9REZEwSwafiMgxI32Ka3JEtDtYBvFLgkqQ69Iz7kmKjfcxenDnkhjDsZZzuf32y2J9qWVlcOh1DJGR4d6KQa/To3iaNVytTQLDLwkKZ2ZJwpyc/EpRLmj1HOWOICq2u1w42FDbF5yyBlXQKCpDKNqRAjOyXJMiotzBKQRJzDSANTH5BUt0XDBljAJZ43hLU/Slvt4wruWbgFBFNUl6sR6oapiblWvkQcK8hoDVBVnDqNOhPDt/BTzChFpxOmU3vmhs6CNCwaHeoyhUlgMFUzK6Ys3hkBilueAIXiIxhuzklL/QTk4r1QnBBicFVF9oNrQP9FmCi6GORtvaMKMRZVnTJ6m1x8h+JBCCkxD7AIaynLxbFTm0Qk2DS5ZxoP5Uu8zVrB4MXfZ+zMnK3RPtJ3v7Q0gkKEZnJlr25kxOFj4rFnYIIF2eabfhQn9P3qh99DgRa3jYAQMkKkAXCqcK1W+DLWxfSExC+fTCXCLk2TSGBLei4GDtiZqRUDl+aOvq7824ITN7a4TJKMadSI4JyRIaUuITGqYkUY0TinN4wBjOXbwAW2dnUSDWQ47hosIpmffQtmmimBAJijQVOQX5RqYPcTupggrFQw01x7VyeyzofEx4xF6z0Qzqf2lbz1DpTIgEIS0uvnZ6ajpC3Y0RKFKd62xH66WOca1BwsbHxdlDFXosJkyCnLUkOy/aIDqG6vrTikJ/652uuxiw//SJ4/I4yY9I6iW1M3g1mDAJmjAxJmagKC1jyLeuEQTGUyX1qDzXzvV1obG97fbgWWZimDAJDaXWgogwiVqSoYP20PsbanZRe/Na4qpIkMLjIiJQlD6tlbK4lju8fV9fePKKaDpwoKWvG7W25gdDrW5DwVWR0FCcY02nPcBEQArYX1/7slOWQyzSg0Mf/Bb/iA0PR7m14J0TrU0r+Dj9oPHAOAeXOdq6OksyEpMOq2ntauOSCuZb1F0tJjqGCAK0BWUM1JofKUOuzjGuCYmvD22hXx2Jr+VO1w5XJ7yGr/f0NwT/J/FNwf+GJSh87vjiAN+y759clrnWL7jGmMgWSH176yuIXisbqNIUrUJRlmpvUdU/nv/wbbT1dGJl8c2IModD8dhP60d5wr6aeOhxipie/CV+fHPZuLlNq3+DJz3f94qnmxtXHj1fvx22nq7U812Xiuxul9gjUJ+Iywq6BgfQ1NUxy+5yorr1/CO7jn/pdA8ruDzkwLnOjvKeITs6Lw/i04ZTnx053/DKkMsJmXO4OYettzu1uac7z+GWcaKl6UG6x9bbk0oCUJuzqrH+zQNna9/vHhoUQnEui93ikNOBr2yNz35cX/2fY7azm2hMuk4v89v6e+JJzmG3G2c6LizY33DqHx09Pfpz7bZydve2l/jbVR/hxZUP4Cc3LhCq6L48gJuee5grbgWHn97CNu7ewf/8+b9wcuNr7GBDDV++5WlkpWZi2OnAmYstkHQ6LMgvxnvrnmRhJhPKnrmfn+ntwvS0LHxZVw0XXLDExWPzD3+KF3fvwNGG0+BMQqElDR888uz8aZOS9u2tPday4d1X02paG6EoMiRJh1JrEXasfTI3LSauYenmp/jHdTUozivEkdrjcMtuHP/lq3fmWJL/Kv2gbEGVXVbwdtUn3r7ph9WH+SlbC74zswJmkxl/P7oPgy6HMLrMFdgVGbVt5zErPQcbF98FS2Qc9p44gneO7hN+4VBk9Nod6O69hJ8vXYHvFpWiY2AAK7duAlMYnlu2BrOmZuPkpVb8Zte7n5C/mSR9Y5I5Gjsf2ITqjdsqK7+1HFV1J/HS7r/Va2MOyjIOnqrGosIyrK34HiJNYVVUDetLMnPLZqRk8ENna3CyuenxwvSM53Yc/BQmYwS+X1Kxxfuymb778LbFGYozcrH97keZQaeD2WTij773JxxtPI015beJNUCvabetqfygJCtnaUdfr6XwF+va6UXx9rWPL8mxWHbect0Nv53zqw2Vpy+0gCsyKqxFFbsqC9HU2bGsrbencl7+9Xitag+qz5/xBhGuKNi4bC023LZY7CvVpcehNxsN+PG8RVj/1u/x+qGPfn2vYWHrvoZa3JA+DTPSp94vJOJmgF/WakZ6gY0MyxQQAUJKogUcBri8ex2GKJMR6QmJT9CmP8ocftFkMMBsNNGucCeZa3JU7Bt6nb5yWKGvCYCPTn/V9th725LqWm2gZptex2GXZbg8i54zLua7pbDol6PLDabWTsvmlEc/u+ut/t3VVbAr7u3DjmGsuWmRaK+7qesnvo4ZjdEbINVEV2yKxgQb6l15IxjElypQGEO/3Y7Vr76YNORyYfOqe1Gaaa0cuDw0b+HmJ5eQ8Fr0o+jJwOhTmlEQo1qiYweWzJiLcz2XsP2zfyMlbhIWzygNHxsdxWCeEOzbJ1abdZJaWouPYtQ4ygAxobeB4EOKMxhEuOQcfYMDJe293UiPT8CK4nksLyn1hRMdLUsuO50+Lzj5qDl94a1iV5fO/+D1/buWOLgTt5d8G5OjI0ULRYiiuMBlWUhDH7GAD0NRRl73UnjkilOEQhKKcxcUTgJwMb74oEV2q2N4QNe47ARX3EiMiz08NyMbB1rqUbrpAR5hMOKYrZkeAnerz1DYl2XSyZU9FS+J2dOmL928fB3vddqxeGb5E9qOixpmGxYuxaDTgXCjCQVJaSs23rnmnfyp07wCzUjJWP/MHau3FE3JEm9j7r5lKSjGR5nN4rWtQa/HY4tWwKjXw6RTp4wzRRx+dvEqJETHwKQ34N37nkp7pWpv62nbeWQmJOP5O9Z9WdVYNyslJl7EltU3LsJ86xwkRsVuHetO/wUAowILrIN4DQAAAABJRU5ErkJggg==" alt=""></a><div class="dtabs"><a href="#home" data-nav="home">Home</a><a href="#current" data-nav="current">Current State</a><a href="#benefits" data-nav="benefits">Why S/4HANA &amp; Benefits</a><a href="#plan" data-nav="plan">Project Plan</a><a href="#investment" data-nav="investment">Investment</a><a href="#next" data-nav="next">Next steps</a></div></nav>
+<div class="present" id="present" role="dialog" aria-modal="true" aria-label="Start presentation">
+  <div class="pr-bg"></div>
+  <div class="pr-in">
+    <div class="pr-logos"><span class="fl"><img id="prVin" alt="Vinmar"></span><span class="fx">×</span><span class="fl"><img id="prKt" alt="KaarTech"></span></div>
+    <div class="eyebrow">Proposal · SAP S/4HANA brownfield conversion</div>
+    <h1>Vinmar’s move to <em>SAP S/4HANA</em></h1>
+    <button class="pr-go" id="prGo"><span>▶</span>Start presentation</button>
+    <button class="pr-skip" id="prSkip">Browse without full screen</button>
+    <p class="pr-k">Use → or Space for the next slide · F for full screen</p>
+  </div>
+</div>
+<nav class="dock" aria-label="Sections"><a class="dlogo2" href="#home" aria-label="Home"><img src="data:image/png;base64,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" alt=""></a><div class="dtabs"><a href="#home" data-nav="home">Home</a><a href="#current" data-nav="current">Current &amp; Target State</a><a href="#benefits" data-nav="benefits">Why S/4HANA &amp; Benefits</a><a href="#plan" data-nav="plan">Project Plan</a><a href="#investment" data-nav="investment">Investment</a><a href="#next" data-nav="next">Next steps</a></div></nav>
 <main>
 <div class="bgfx" aria-hidden="true"><svg viewBox="0 0 1600 300" preserveAspectRatio="xMidYMax slice">
   <g fill="var(--bgf)" stroke="var(--bgs)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
@@ -1215,8 +1404,8 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <section class="view" id="v-current" data-view="current" aria-label="Current State">
  <div class="screen"><div class="wrap">
   <div class="vhead reveal" style="display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap">
-    <div><div class="eyebrow">Vinmar today · current state</div><h2>SAP ECC 6.0 landscape and connected systems</h2></div>
-    <div class="csstat"><b data-count="14">14</b><span>connected systems<br>around one ECC core</span></div>
+    <div><div class="eyebrow" id="csEy">Vinmar today · current state</div><h2 id="csH">Current state: SAP ECC 6.0 landscape and connected systems</h2></div>
+    <div class="csctl"><div class="seg" id="csSeg" role="tablist" aria-label="Landscape view"><button role="tab" aria-selected="true" data-st="current">Current state</button><button role="tab" aria-selected="false" data-st="target">Target state</button></div><div class="csstat"><b id="csN">14</b><span id="csNl">connected systems<br>around one ECC core</span></div></div>
   </div>
   <div class="cs fill" id="cs">
     <svg class="cslines" id="cslines" aria-hidden="true"></svg>
@@ -1229,7 +1418,28 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     </div><div class="csinfo" id="csInfo">Hover or click a group to trace its connection</div></div>
     <div class="cscol"><div class="csg reveal d1" data-g="fin" data-side="r" style="--gc:#c4572a" tabindex="0"><div class="csh"><i></i>Finance &amp; treasury<span>2</span></div><div class="csr"><b>AP Workflow</b><span>Vendor payables, quantity pricing</span></div><div class="csr"><b>Treasury Xpress</b><span>Bank transactions</span></div></div><div class="csg reveal d2" data-g="ana" data-side="r" style="--gc:#2b3a24" tabindex="0"><div class="csh"><i></i>Analytics &amp; data<span>3</span></div><div class="csr"><b>Celonis</b><span>O2C process dashboards</span></div><div class="csr"><b>BI</b><span>Reporting</span></div><div class="csr"><b>Data Lake</b><span>Analytics data store</span></div></div><div class="csg reveal d3" data-g="auto" data-side="r" style="--gc:#6b7a74" tabindex="0"><div class="csh"><i></i>Automation &amp; other<span>2</span></div><div class="csr"><b>RPA</b><span>Automation bots</span></div><div class="csr"><b>MCC</b><span>Scope to be confirmed</span><em class="tg tbc">TBC</em></div></div></div>
   </div>
-  <div class="csfoot"><span>Source: Vinmar landscape as shared, Nov 2026</span><span class="cslg"><em class="tg sap">SAP</em><em class="tg net">.NET</em><em class="tg tbc">TBC</em> technology where known</span></div>
+
+  <div class="ts fill" id="ts" hidden>
+    <svg class="alines" id="tslines" aria-hidden="true"></svg>
+    <div class="alg"><span><i class="s"></i>In conversion scope</span><span><i class="f"></i>Future opportunity · separate scope</span></div>
+    <div class="acol aleft"><h5>Connected systems</h5><div class="ax" data-x="0"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/></svg></span><b>SharePoint DMS</b></div><div class="ax" data-x="1"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 4 4v5.5"/></svg></span><b>Celonis</b></div><div class="ax" data-x="2"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></span><b>BI</b></div><div class="ax" data-x="3"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15c3-2 6 2 9 0s6-2 9 0M3 19c3-2 6 2 9 0s6-2 9 0M12 3v8M8 7l4 4 4-4"/></svg></span><b>Data Lake</b></div><div class="ax" data-x="4"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01"/></svg></span><b>RPA</b></div><div class="ax" data-x="5"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><b>MCC</b><em class="tg tbc">TBC</em></div><div class="aret"><h5>Can retire into S/4HANA</h5><div><s>SAP B1</s><s>TMS</s><s>PPS</s><s>EDS</s><s>CRM</s><s>AP Workflow</s><s>Visual Compliance</s><s>Treasury Xpress</s></div></div></div>
+    <div class="astack">
+      <div class="arow users"><span class="al">Users</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Desktop</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M11 18h2"/></svg>Tablet</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg>Phone</span></div>
+      <div class="arow ux"><span class="al">Experience</span><span class="ak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>SAP Fiori launchpad</span><span class="ak"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-8 6 6 0 0 1 11.4 1.6A3.5 3.5 0 0 1 17.5 18z"/></svg>SAP Build Work Zone</span><span class="ak fut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Joule</span></div>
+      <div class="acore" id="tcore"><div class="ach"><b>SAP S/4HANA</b><small>Cloud, private edition · RISE with SAP</small></div>
+        <div class="alobs"><div class="alob" style="--d:0"><h6>Finance</h6><div class="ab"><b>Universal Journal (FI/CO)</b></div><div class="ab fut" data-was="Treasury Xpress"><b>Bank comms: payment formats, bank master, BCM</b><i>was Treasury Xpress</i></div><div class="ab fut" data-was="AP Workflow"><b>Invoice &amp; payment approval workflow, quantity pricing</b><i>was AP Workflow</i></div></div><div class="alob" style="--d:1"><h6>Sales &amp; trade</h6><div class="ab"><b>Order-to-cash (SD)</b></div><div class="ab"><b>Advanced Credit Mgmt</b></div><div class="ab fut" data-was="CRM"><b>SO &amp; PO in Fiori (back-to-back) + BP records</b><i>was CRM</i></div><div class="ab fut" data-was="EDS"><b>Export docs (Intl Trade) + letters of credit (Trade Finance)</b><i>was EDS</i></div></div><div class="alob" style="--d:2"><h6>Supply chain</h6><div class="ab"><b>Procurement (MM)</b></div><div class="ab" data-was="WMS"><b>Warehouse management</b><i>was WMS</i></div><div class="ab fut" data-was="PPS"><b>Repackaging bulk → bags (PP-PI + EWM)</b><i>was PPS</i></div><div class="ab fut" data-was="TMS"><b>Transportation Mgmt</b><i>was TMS</i></div></div><div class="alob" style="--d:3"><h6>Manufacturing</h6><div class="ab fut" data-was="SAP B1"><b>Production &amp; quality (PP/QM)</b><i>was SAP B1</i></div></div></div>
+        <div class="abase"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg>Business Partner (CVI)</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>SAP HANA database <i>was MS SQL Server</i></span></div>
+      </div>
+      <div class="arow alm"><span class="al">Toolchain</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 4 4v5.5"/></svg>SAP Signavio</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 7l3-3 3 3-3 3M4 20l9-9M7 4h4v4"/></svg>SAP Cloud ALM</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Automated testing</span></div>
+    </div>
+    <div class="acol aright"><h5>SAP BTP · side-by-side</h5>
+      <div class="ab2 fut"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v5M15 3v5M7 8h10v4a5 5 0 0 1-10 0zM12 17v4"/></svg></span><b>Integration Suite</b><i>was PI/PO</i></div>
+      <div class="ab2 fut"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></span><b>SAP GTS · sanctioned-party screening</b><i>was Visual Compliance</i></div>
+      <div class="ab2 fut"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/></svg></span><b>Multi-Bank Connectivity</b><i>bank connections · was Treasury Xpress</i></div>
+      <div class="ab2 ext"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/></svg></span><b>Banks · carriers · partners</b></div>
+    </div>
+  </div>
+  <div class="csfoot"><span id="csSrc">Source: Vinmar landscape as shared, Nov 2026</span><span class="cslg"><em class="tg sap">SAP</em><em class="tg net">.NET</em><em class="tg tbc">TBC</em> technology where known</span></div>
  </div></div>
 </section>
 
@@ -1320,7 +1530,7 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   </div>
   <div class="gwrap fill reveal d1" id="gwrap"><div class="gantt" id="gantt"></div></div>
   <div class="accel" id="accel" hidden><div class="ka" style="--d:0"><div class="kah"><span class="ui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><div><small>KTern.AI</small><b>Digital Maps</b><span>SAP system assessment</span></div></div><div class="kph">Used in · Prepare &amp; Explore</div><div class="kak"><div><b>65%</b><span>Faster system discovery</span></div><div><b>0</b><span>Add-on installation required</span></div><div><b>100%</b><span>Automated custom code mining</span></div><div><b>75%</b><span>Effort savings in SAP system assessment</span></div></div><div class="kac"><span>Landscape Assessment</span><span>Custom Code Impact</span><span>Process &amp; User Profiling</span><span>Test Scenario Insights</span><span>SAP System Auto-Assessment</span><span>Enterprise Structure Mining</span></div></div><div class="ka" style="--d:1"><div class="kah"><span class="ui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M8 11h6M11 8v6"/></svg></span><div><small>KTern.AI</small><b>Reverse Engineering AI Agents</b><span>Documentation of the SAP landscape</span></div></div><div class="kph">Used in · Prepare &amp; Explore · DEV conversion</div><div class="kak"><div><b>90%</b><span>Reduction in documentation time</span></div><div><b>5x</b><span>Faster onboarding for new consultants</span></div><div><b>100%</b><span>Automated: processes, objects, dependencies</span></div><div><b>60%</b><span>Cost savings in SAP modernization projects</span></div></div><div class="kac"><span>Technical Documentation</span><span>Functional Documentation</span><span>Test Cases</span><span>Dependency Mapping</span></div></div><div class="ka" style="--d:2"><div class="kah"><span class="ui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 15h8"/></svg></span><div><small>KTern.AI</small><b>Digital Labs</b><span>SAP test orchestration</span></div></div><div class="kph">Used in · QAS conversion · SIT, UAT, regression</div><div class="kak"><div><b>30%</b><span>Improvement in test team productivity</span></div><div><b>45%</b><span>Reduction in test cycle time</span></div><div><b>40%</b><span>Faster defect identification and closure</span></div><div><b>100%</b><span>Traceability across test plans, cases and defects</span></div></div><div class="kac"><span>Test Cockpit</span><span>Test Cases</span><span>Test Scripts</span><span>Test Evidences &amp; Defects</span><span>Test Analytics &amp; Reports</span></div></div></div>
-  <div class="gfoot"><span class="muted" id="accNote" style="font-size:12.5px;display:none">KTern is configured at project kick-off, so the accelerators work from week 1.</span><span class="muted" id="tlNote" style="font-size:12.5px">Indicative plan; durations to be confirmed after the S/4HANA Readiness Check.</span></div>
+  <div class="gfoot"><span class="muted" id="accNote" style="font-size:12.5px;display:none">KTern is configured at project kick-off, so the accelerators work from week 1.</span><span class="scopen" id="tlNote"><b>Scope: ECC → S/4HANA conversion only.</b> Replacing TMS, Treasury Xpress, SAP B1 etc. is future scope.</span></div>
  </div></div>
 </section>
 
@@ -1386,15 +1596,13 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <!-- ================= NEXT STEPS ================= -->
 <section class="view" id="v-next" data-view="next" aria-label="Next steps">
  <div class="screen"><div class="wrap">
-  <div class="nx">
-    <div class="nxpic reveal d1"><img id="nsPhoto" alt="Vinmar exhibition stand"><div class="nxcap"><small>Vinmar × KaarTech</small><b>From decision to go-live in under a year</b></div></div>
-    <div class="nxr">
-      <div class="vhead reveal"><div class="eyebrow">Next steps</div><h2>Three decisions to get started</h2></div>
-      <div class="stw"><div class="stline" aria-hidden="true"><i></i></div>
-        <div class="st2 reveal d1"><div class="stn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M8.5 11l2 2 3.5-4"/></svg><span>1</span></div><div class="stc"><h3>Approve the SAP Readiness Check</h3><div class="stp"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Readiness Check and custom code analysis</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Confirm the conversion path</span></div></div></div>
-        <div class="st2 reveal d2"><div class="stn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-8 6 6 0 0 1 11.4 1.6A3.3 3.3 0 0 1 17.5 18z"/></svg><span>2</span></div><div class="stc"><h3>Start RISE with SAP talks</h3><div class="stp"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Confirm the licence price</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Lock in conversion credits</span></div></div></div>
-        <div class="st2 reveal d3"><div class="stn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg><span>3</span></div><div class="stc"><h3>Agree a kick-off month</h3><div class="stp"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Kick-off and KTern configuration</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Delta design workshops</span></div></div></div>
-      </div>
+  <div class="fin" id="fin">
+    <div class="fin-bg"><img id="nsPhoto" alt="Vinmar exhibition stand"></div>
+    <div class="fin-in">
+      <div class="fin-top reveal"><div class="eyebrow">Next steps</div><h2>Let’s start Vinmar’s move to <em>SAP S/4HANA</em></h2><p>Three decisions turn this plan into a project.</p></div>
+      <div class="fin-track" aria-hidden="true"><span class="fin-line"><i></i></span><b class="fin-flag">Kick-off</b></div>
+      <div class="fin-cards"><article class="fin-c" style="--i:0"><div class="fin-n"><span>01</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M8.5 11l2 2 3.5-4"/></svg></i></div><h3>Approve the SAP Readiness Check</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Readiness Check and custom code analysis</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Confirm the conversion path</li></ul></article><article class="fin-c" style="--i:1"><div class="fin-n"><span>02</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-8 6 6 0 0 1 11.4 1.6A3.3 3.3 0 0 1 17.5 18z"/></svg></i></div><h3>Start RISE with SAP talks</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Confirm the licence price</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Lock in conversion credits</li></ul></article><article class="fin-c" style="--i:2"><div class="fin-n"><span>03</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg></i></div><h3>Agree a kick-off month</h3><ul><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Kick-off and KTern configuration</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Delta design workshops</li></ul></article></div>
+      <div class="fin-foot reveal"><div class="fin-logos"><span class="fl"><img id="finVin" alt="Vinmar"></span><span class="fx">×</span><span class="fl"><img id="finKt" alt="KaarTech"></span></div><div class="fin-ty">Thank you</div></div>
     </div>
   </div>
  </div></div>
@@ -1408,7 +1616,7 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </aside>
 <div class="overlay" id="help" role="dialog" aria-modal="true" aria-labelledby="hTitle"><div class="sheet">
   <div style="display:flex;justify-content:space-between;align-items:center"><h3 id="hTitle" style="font-size:20px">Keys</h3><button class="mini" data-close>✕ Close</button></div>
-  <div class="keys"><kbd>N</kbd><span>Next tab</span><kbd>Shift N</kbd><span>Previous tab</span><kbd>K</kbd><span>Home: Objective / About KaarTech</span><kbd>T</kbd><span>Light / dark theme</span><kbd>← →</kbd><span>Project Plan: phases</span><kbd>Esc</kbd><span>Close panels</span></div>
+  <div class="keys"><kbd>N</kbd><span>Next tab</span><kbd>Shift N</kbd><span>Previous tab</span><kbd>K</kbd><span>Home: Objective / About KaarTech</span><kbd>T</kbd><span>Light / dark theme</span><kbd>← →</kbd><span>Project Plan: phases</span><kbd>F</kbd><span>Full screen on / off</span><kbd>→ Space</kbd><span>Next slide (← back)</span><kbd>M</kbd><span>Animations on / off</span><kbd>Esc</kbd><span>Close panels</span></div>
 </div></div>
 <div class="hud" id="hud"></div>
 
@@ -1416,7 +1624,7 @@ button.ju:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 (()=>{
 'use strict';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
-const mq=matchMedia('(prefers-reduced-motion: reduce)');let reduced=mq.matches;
+const mq={matches:false,addEventListener(){},addListener(){}};let reduced=false;try{reduced=localStorage.getItem('vin-rm')==='1'}catch(e){}document.documentElement.classList.toggle('rm',reduced);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),ease=t=>1-Math.pow(1-t,3);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const DAY=864e5,WEEK=7*DAY;
@@ -1459,7 +1667,7 @@ const PHASES=[
    rows:[['PGLS (Hypercare)',29,32,'hyper']],inputs:['Live S/4HANA PRD'],deliverables:[],exit:null,informs:null}
 ];
 const VIEWS=['home','current','benefits','plan','investment','next'];
-const VNAME={home:'Home',current:'Current State',why:'Why S/4HANA now',benefits:'Why S/4HANA & Benefits',plan:'Project Plan',ai:'AI Features & Agents',investment:'Investment',next:'Next steps'};
+const VNAME={home:'Home',current:'Current & Target State',why:'Why S/4HANA now',benefits:'Why S/4HANA & Benefits',plan:'Project Plan',ai:'AI Features & Agents',investment:'Investment',next:'Next steps'};
 
 /* chrome */
 function setTheme(t){document.documentElement.dataset.theme=t;$('#themeIco').textContent=t==='dark'?'☀':'☾';try{localStorage.setItem('vin-theme3',t)}catch(e){}}
@@ -1539,12 +1747,12 @@ const Ben=(function(){
     if(t.includes('ai')||t.includes('innovation'))return 'spark';
     return 'check'}
   function card(x,k,cls){const c=x.indexOf(':');const t=c>0?x.slice(0,c):x,d=c>0?x.slice(c+1).trim():'';return `<div class="bcard ${cls}" style="--d:${k}"><span class="bn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[iconFor(x)]}</svg></span><div><b>${esc(t)}</b>${d?`<span>${esc(d)}</span>`:''}</div></div>`}
-  const WHYH="<div class=\"wy amber\" style=\"--d:0\"><div class=\"wyl\"><span>01</span><b>2027</b><small>SAP ends standard support for ECC</small></div><div class=\"wyr\"><h4>Act now</h4><ul><li>Standard ECC support ends Dec 2027; extended support to 2030 costs more</li><li>SAP\u2019s discounts and conversion credits are at their highest now</li><li>Experienced ECC resources are becoming scarcer and costlier</li></ul></div></div><div class=\"wy \" style=\"--d:1\"><div class=\"wyl\"><span>02</span><b>&lt; 1 year</b><small>From kick-off to go-live and stabilisation</small></div><div class=\"wyr\"><h4>Low risk for Vinmar</h4><ul><li>Brownfield keeps history, data and processes intact</li><li>Minimal disruption to day-to-day operations</li><li>Licence includes infrastructure and hosting; nothing to buy or run separately</li></ul></div></div><div class=\"wy blue\" style=\"--d:2\"><div class=\"wyl\"><span>03</span><b>AI-ready</b><small>Foundation for SAP\u2019s latest innovation</small></div><div class=\"wyr\"><h4>Future-ready platform</h4><ul><li>Joule and embedded AI; SAP innovation lands only on S/4HANA</li><li>Opportunity to retire unused custom code and obsolete interfaces</li><li>Modern UX with role-based Fiori apps on desktop, tablet and phone</li></ul></div></div>";
+  const WHYH="<div class=\"wy amber\" style=\"--d:0\"><div class=\"wyl\"><span>01</span><b>2027</b><small>SAP ends standard support for ECC</small></div><div class=\"wyr\"><h4>Act now</h4><ul><li>Standard ECC support ends Dec 2027; extended support to 2030 costs more</li><li>SAP\u2019s discounts and conversion credits are at their highest now</li><li>Experienced ECC resources are becoming scarcer and costlier</li></ul></div></div><div class=\"wy \" style=\"--d:1\"><div class=\"wyl\"><span>02</span><b>&lt; 1 year</b><small>From kick-off to go-live and stabilisation</small></div><div class=\"wyr\"><h4>Low risk for Vinmar</h4><ul><li>Brownfield keeps history, data and processes intact</li><li>Minimal disruption to day-to-day operations</li><li>Licence includes infrastructure and hosting; nothing to buy or run separately</li></ul></div></div><div class=\"wy blue\" style=\"--d:2\"><div class=\"wyl\"><span>03</span><b>AI-ready</b><small>Foundation for SAP\u2019s latest innovation</small></div><div class=\"wyr\"><h4>Future-ready platform</h4><ul><li>Joule and embedded AI; SAP innovation lands only on S/4HANA</li><li>Opportunity to retire unused custom code and obsolete interfaces</li><li>Modern UX with role-based Fiori apps on desktop, tablet and phone</li></ul></div></div><div class=\"wy opp\" style=\"--d:3\"><div class=\"wyl\"><span>04</span><b>1 core</b><small>Fewer third-party apps</small></div><div class=\"wyr\"><h4>Future opportunities <a class=\"wylink\" href=\"#current-target\">See the target state →</a></h4><ul><li>Retire third-party apps into the S/4HANA digital core: TMS → Transportation Management; Treasury Xpress → Treasury Management + Multi-Bank Connectivity; SAP B1 → S/4HANA for the manufacturing companies</li><li>SAP integrated toolchain: Signavio, Cloud ALM and automated testing</li></ul></div></div>";
   function body(m){
     if(m.kind==='core')return `<div class="mhead"><div><div class="kicker">S/4HANA core</div><h3>Why S/4HANA now</h3><p class="wysub">Not replacing Vinmar’s core system but modernising it for the next decade</p></div></div><div class="wyl-w">${WHYH}</div>`;
     return `<div class="mhead"><div><div class="kicker">${esc(m.key)}</div><h3>${esc(m.name)}</h3></div>${m.metric?`<div class="metric"><b>${mt(m)}</b><span>${esc(m.metric.label)}</span></div>`:''}</div>
-    <h4 class="bh">${m.kind==='module'?'At go-live':'Future-ready platform'}</h4><div class="bgrid">${m.golive.map((x,k)=>card(x,k,'')).join('')}</div>
-    ${m.id==='joule'?`<h4 class="bh">Joule use cases with S/4HANA</h4><div class="jgrid">${AI.ucHTML()}</div>`:''}${m.id==='fiori'?`<h4 class="bh">See a Fiori app in action</h4><div class="fapps">${[['fico','Manage Journal Entries','FICO'],['sd','Manage Credit Accounts','SD'],['mm','Manage Purchase Orders','MM']].map(([k,n,a],i)=>`<button type="button" class="fapp" data-app="${k}" style="--d:${i}"><small>${a}</small><b>${n}</b><span>▶</span></button>`).join('')}</div>`:''}${m.value.length?`<h4 class="bh">Potential Value Benefits</h4><div class="bgrid">${m.value.map((x,k)=>card(x,k+m.golive.length,'val')).join('')}</div>`:''}`;
+    <h4 class="bh">${m.kind==='module'?'At go-live':'Future-ready platform'}</h4><div class="bgrid${m.id==='fiori'?' fcaps':''}">${m.golive.map((x,k)=>card(x,k,'')).join('')}</div>
+    ${m.id==='joule'?`<h4 class="bh">Joule use cases with S/4HANA</h4><div class="jgrid">${AI.ucHTML()}</div>`:''}${m.id==='fiori'?`<h4 class="bh">See a Fiori app in action</h4><div class="fgrp">${[['fico','FICO'],['sd','SD'],['mm','MM']].map(([k,a],g)=>`<div class="fcol"><h6>${a}</h6>${DEMO[k].tiles.map((n,i)=>`<button type="button" class="fapp" data-app="${k}" data-i="${i}" style="--d:${g*4+i}"><b>${esc(n)}</b><span>▶</span></button>`).join('')}</div>`).join('')}</div>`:''}${m.value.length?`<h4 class="bh">Potential Value Benefits</h4><div class="bgrid">${m.value.map((x,k)=>card(x,k+m.golive.length,'val')).join('')}</div>`:''}`;
   }
   function intro(){return `<div class="kicker">Benefits by Business Functions</div><h3 style="font-size:22px">Benefits realised at go-live, plus opportunities the new platform unlocks</h3>
     <div class="pickgrid">${MODULES.filter(m=>m.metric).map(m=>`<button data-pick="${m.id}"><div class="kicker">${m.key} · ${esc(m.name)}</div><div class="v">${mt(m)}</div><div class="muted" style="font-size:12.5px">${esc(m.metric.label)}</div></button>`).join('')}</div>`}
@@ -1591,6 +1799,7 @@ const DEMO={
   mm:{space:'mm',tiles:['Manage Purchase Orders','Stock – Single Material','Manage Workflows for Purchase Orders','Manage Business Partner Master Data'],open:0,title:'Manage Purchase Orders',
       cols:['Purchase Order','Supplier','Net Value','Approval'],rows:[['4500001201','Supplier A','84,200','Approved'],['4500001202','Supplier B','12,750','In approval'],['4500001203','Supplier C','230,000','Approved'],['4500001204','Supplier D','9,400','Approved']]}
 };
+const APPS={"fico": [null, {"title": "Trial Balance", "cols": ["G/L Account", "Description", "Debit", "Credit"], "rows": [["113100", "Bank – main account", "920,400", "610,300"], ["400000", "Freight expense", "184,200", "0"], ["410000", "Storage expense", "62,750", "0"], ["500000", "Revenue – polymers", "0", "1,250,000"]]}, {"title": "Display Line Items in General Ledger", "cols": ["Posting Date", "Document", "Amount", "Text"], "rows": [["03.11.", "5100000112", "4,200.00", "Freight"], ["07.11.", "5100000140", "1,850.00", "Storage"], ["12.11.", "5100000171", "2,975.00", "Freight"], ["13.11.", "5100000188", "640.00", "Handling"]]}, {"title": "Post General Journal Entries", "cols": ["Item", "G/L Account", "Debit", "Credit"], "rows": [["1", "400000 Freight", "12,450.00", ""], ["2", "154000 Input tax", "996.00", ""], ["3", "211000 Payables", "", "13,446.00"]]}], "sd": [{"title": "Manage Sales Orders", "cols": ["Sales Order", "Customer", "Net Value", "Status"], "rows": [["1000231", "Customer A", "482,000", "Open"], ["1000232", "Customer B", "96,400", "In delivery"], ["1000233", "Customer C", "1,240,000", "Completed"], ["1000234", "Customer D", "58,300", "Open"]]}, null, {"title": "Track Sales Orders", "cols": ["Sales Order", "Customer", "Delivery", "Status"], "rows": [["1000228", "Customer A", "80000412", "Shipped"], ["1000229", "Customer C", "80000415", "In transit"], ["1000230", "Customer B", "80000419", "Delivered"], ["1000231", "Customer A", "—", "Open"]]}, {"title": "Manage Billing Documents", "cols": ["Billing Doc", "Customer", "Amount", "Status"], "rows": [["90000451", "Customer A", "482,000", "Posted"], ["90000452", "Customer B", "96,400", "Posted"], ["90000453", "Customer C", "1,240,000", "Parked"], ["90000454", "Customer D", "58,300", "Posted"]]}], "mm": [null, {"title": "Stock – Single Material", "cols": ["Plant", "Storage Location", "Unrestricted", "Blocked"], "rows": [["1000", "Houston warehouse", "1,240 BAG", "0"], ["1000", "Bulk silo", "320 MT", "12 MT"], ["2000", "Rotterdam hub", "860 BAG", "0"]]}, {"title": "Manage Workflows for Purchase Orders", "cols": ["Workflow", "Condition", "Approver", "Status"], "rows": [["PO release", "Net value > 100,000", "Purchasing manager", "Active"], ["PO release", "Net value > 500,000", "Finance director", "Active"], ["Urgent PO", "Priority = high", "Team lead", "Active"]]}, {"title": "Manage Business Partner Master Data", "cols": ["Business Partner", "Name", "Role", "Status"], "rows": [["300120", "Supplier A", "Supplier", "Active"], ["1000245", "Customer A", "Customer", "Active"], ["300131", "Supplier B", "Supplier", "Active"]]}]};['fico','sd','mm'].forEach(m=>{DEMO[m].def=DEMO[m].open;APPS[m][DEMO[m].open]={title:DEMO[m].title,cols:DEMO[m].cols,rows:DEMO[m].rows}});
 const Demo=(function(){
   const fr=$('#dframe'),cur=$('#dcur'),rip=$('#drip');let timers=[],mod='sd',fromWZ=true;
   const T=(ms,f)=>timers.push(setTimeout(f,ms));
@@ -1602,8 +1811,8 @@ const Demo=(function(){
     $('#lptiles').innerHTML=d.tiles.map((t,i)=>`<div class="tl2" style="transition-delay:${i*80}ms"><b>${esc(t)}</b><em>${['▤','◉','◈','▦'][i]}</em></div>`).join('');
     $('#apTitle').textContent=d.title;$('#apHead').innerHTML='<tr>'+d.cols.map(c=>`<th>${esc(c)}</th>`).join('')+'</tr>';
     $('#apBody').innerHTML=d.rows.map(r=>'<tr>'+r.map((c,i)=>`<td>${i===3?`<span class="st${/Warn|In approval|Parked/.test(c)?' w':''}">${esc(c)}</span>`:esc(c)}</td>`).join('')+'</tr>').join('')}
-  function run(m,wz){
-    timers.forEach(clearTimeout);timers=[];mod=m in DEMO?m:'sd';fromWZ=!!wz;build();
+  function run(m,wz,idx){
+    timers.forEach(clearTimeout);timers=[];mod=m in DEMO?m:'sd';fromWZ=!!wz;{const i=idx==null?DEMO[mod].def:idx;Object.assign(DEMO[mod],{open:i},APPS[mod][i])}build();
     $$('.hot',fr).forEach(x=>x.classList.remove('hot'));$$('#lptabs span').forEach(x=>x.classList.remove('on'));
     cur.style.transition='none';cur.style.left='70%';cur.style.top='80%';void cur.offsetWidth;cur.style.transition='';
     let t=0;
@@ -1630,7 +1839,7 @@ function setMode(m,mod){window.Demo=Demo;
 }
 $$('.seg button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));window.setMode=setMode;
 const jr=$('#jReplay');if(jr)jr.onclick=()=>AI.play();
-$('#modbody').addEventListener('click',e=>{const fa=e.target.closest('.fapp');if(fa){$$('.fapp').forEach(x=>x.classList.toggle('on',x===fa));setMode('preview',fa.dataset.app);return}const u=e.target.closest('.ju');if(!u)return;AI.cur=u.dataset.uc;if(benMode!=='joule')setMode('joule');else AI.play(u.dataset.uc)});window.Demo=Demo;
+$('#modbody').addEventListener('click',e=>{const fa=e.target.closest('.fapp');if(fa){$$('.fapp').forEach(x=>x.classList.toggle('on',x===fa));setMode('preview',fa.dataset.app);Demo.run(fa.dataset.app,false,+fa.dataset.i);return}const u=e.target.closest('.ju');if(!u)return;AI.cur=u.dataset.uc;if(benMode!=='joule')setMode('joule');else AI.play(u.dataset.uc)});window.Demo=Demo;
 
 /* AI Features & Agents */
 const UC=[{"a": "fi", "n": "Manage Journal Entries", "k": "Joule skill", "d": "Find, review and act on journal entries by asking Joule.", "s": "kt", "v": "both"}, {"a": "fi", "n": "Display G/L Account Line Items", "k": "Joule skill", "d": "G/L view and posting view of account line items, on request.", "s": "kt", "v": "retail"}, {"a": "fi", "n": "Manage Automatic Payments", "k": "Joule skill", "d": "Check and manage automatic payment runs.", "s": "kt", "v": "retail"}, {"a": "fi", "n": "Post Outgoing Payments", "k": "Joule skill", "d": "Post outgoing payments from a conversation.", "s": "kt", "v": "retail"}, {"a": "fi", "n": "Manage Cost Center", "k": "Joule skill", "d": "Look up and maintain cost centers.", "s": "kt", "v": "chem"}, {"a": "fi", "n": "Process Invoice Reminders", "k": "Joule skill", "d": "Handle invoice reminders with Joule.", "s": "kt", "v": "chem"}, {"a": "sd", "n": "Sales Order Creation", "k": "AI Feature", "d": "Create sales orders from unstructured data.", "s": "dc", "v": null}, {"a": "mm", "n": "Supplier Delivery Date Prediction", "k": "AI Feature", "d": "Predict delivery dates for purchase order items based on historical data.", "s": "dc", "v": null}, {"a": "mm", "n": "Create Purchase Requisition", "k": "Joule skill", "d": "Create purchase requisitions by asking Joule.", "s": "kt", "v": "chem"}, {"a": "mm", "n": "Change Purchase Order", "k": "Joule skill", "d": "Update purchase orders from a conversation.", "s": "kt", "v": "chem"}, {"a": "mm", "n": "Operational Purchaser", "k": "Joule skill", "d": "Everyday purchasing tasks and information through Joule.", "s": "kt", "v": "chem"}, {"a": "lg", "n": "Predictive Labor Demand Planning", "k": "AI Feature", "d": "Predict planned workload data based on picking and packing outbound processes.", "s": "dc", "v": null}];
@@ -1826,34 +2035,102 @@ function show(view,sub){
     const v=$('#v-'+view);v.classList.remove('play');void v.offsetWidth;requestAnimationFrame(()=>requestAnimationFrame(()=>v.classList.add('play')));countIn(v);
     if(view==='investment')window.__tco();
     if(view==='current')CS.show();
-    if(view==='next'){const n=$('#nsPhoto'),h=$('.hero-photo');if(n&&h&&!n.src)n.src=h.src}
+    if(view==='next'){const n=$('#nsPhoto'),h=$('.hero-photo');if(n&&h&&!n.src)n.src=h.src;const fv=$('#finVin'),fk=$('#finKt');if(fv&&!fv.src)fv.src=$('.lg-vin').src;if(fk&&!fk.src)fk.src=$('.lg-kt').src}
     if(view!=='benefits')AI.chatStop();
     if(view!=='benefits'&&window.Demo)Demo.stop();
     if(view==='benefits'){if(benMode==='preview'&&Ben.sel==='fiori')setMode('preview','fiori');else if(benMode==='joule'&&Ben.sel==='joule')setMode('joule');else if(benMode!=='platform')setMode('platform');fitStack();const iso=$('#benIso'),sl=$$('.slab',iso).filter(x=>!x.classList.contains('core'));sl.forEach(x=>x.classList.add('pending'));if(!reduced)sl.forEach((x,k)=>setTimeout(()=>x.classList.remove('pending'),250+k*260));else sl.forEach(x=>x.classList.remove('pending'))}
   }
+  if(view==='current'&&window.CSTo){if(sub==='target')CSTo.set('target',false);else if(CSTo.state!=='current')CSTo.set('current')}
   if(view==='home'){Home.set(sub==='kaartech'?'kt':(changed?Home.cur:Home.cur));Home.place()}
   if(view==='benefits')Ben.select(sub&&MODULES.some(m=>m.id===sub)?sub:(changed?'s4':Ben.sel));
   if(view==='plan'){planView(sub==='accel'?'accel':'tl');if(sub==='accel')return;Plan.onShow();const i=PHASES.findIndex(p=>p.id===sub);if(i>=0)setTimeout(()=>Plan.openPhase(i),changed&&!reduced?450:30)}
 }
 function route(){let h=decodeURIComponent(location.hash.slice(1))||'home';if(h==='why'){h='benefits-s4';history.replaceState(null,'','#benefits-s4')}if(h==='ai'){h='benefits-joule';history.replaceState(null,'','#benefits-joule')}if(h==='ai-agents')h='plan-accel';const i=h.indexOf('-');show(i<0?h:h.slice(0,i),i<0?null:h.slice(i+1))}
 addEventListener('hashchange',route);route();
-/*DOCKJS*/(function(){const l=$('#v-plan .legend.plg'),f=$('#v-plan .gfoot');if(l&&f){f.appendChild(l);f.style.display='flex';f.style.justifyContent='space-between';f.style.alignItems='center';f.style.gap='12px';f.style.flexWrap='wrap'}})();
-/* DOCK auto-hide: appears when the cursor nears the bottom edge */
-(function(){const d=$('.dock'),pk=$('#dpeek');if(!d)return;const fine=matchMedia('(hover:hover) and (pointer:fine) and (min-width:761px)');let t=null,over=false;
- function hide(){if(!fine.matches||over||d.contains(document.activeElement))return;d.classList.add('hid');document.body.classList.add('dockhid')}
- function showD(ms){clearTimeout(t);d.classList.remove('hid');document.body.classList.remove('dockhid');if(ms)t=setTimeout(hide,ms)}
- addEventListener('mousemove',e=>{if(!fine.matches)return;if(e.clientY>innerHeight-90)showD(0);else if(!over&&!d.classList.contains('hid')){clearTimeout(t);t=setTimeout(hide,700)}},{passive:true});
- d.addEventListener('mouseenter',()=>{over=true;showD(0)});d.addEventListener('mouseleave',()=>{over=false;clearTimeout(t);t=setTimeout(hide,900)});
- d.addEventListener('focusin',()=>showD(0));d.addEventListener('focusout',()=>{t=setTimeout(hide,900)});
- d.addEventListener('click',e=>{if(e.target.closest('a')){over=false;t=setTimeout(hide,1200)}});
- pk&&pk.addEventListener('mouseenter',()=>showD(0));document.addEventListener('mouseleave',()=>{t=setTimeout(hide,600)});
- showD(2500);
+/*DOCKJS*/
+/* PRESENTATION: start screen + full screen */
+function toggleFS(){const d=document;if(d.fullscreenElement||d.webkitFullscreenElement){(d.exitFullscreen||d.webkitExitFullscreen).call(d)}else{const el=d.documentElement;const r=el.requestFullscreen||el.webkitRequestFullscreen;if(r)try{const p=r.call(el);p&&p.catch&&p.catch(()=>{})}catch(_){}}}
+(function(){const ov=$('#present');if(!ov)return;
+  const pv=$('#prVin'),pk=$('#prKt'),lv=$('.lg-vin'),lk=$('.lg-kt');if(pv&&lv)pv.src=lv.src;if(pk&&lk)pk.src=lk.src;
+  let seen=false;try{seen=sessionStorage.getItem('vin-started')==='1'}catch(_){}
+  const close=()=>{ov.classList.add('gone');try{sessionStorage.setItem('vin-started','1')}catch(_){};setTimeout(()=>window.dispatchEvent(new Event('resize')),400)};
+  if(seen)ov.classList.add('gone');else setTimeout(()=>$('#prGo').focus(),300);
+  $('#prGo').onclick=()=>{toggleFS();close();if(!location.hash||location.hash==='#')location.hash='#home'};
+  $('#prSkip').onclick=close;
+  ov.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();close()}});
+  $('#bFS').onclick=toggleFS;
+  const fsc=()=>{document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));setTimeout(()=>window.dispatchEvent(new Event('resize')),250)};
+  document.addEventListener('fullscreenchange',fsc);document.addEventListener('webkitfullscreenchange',fsc);
+})();
+
+/* CURRENT → TARGET morph */
+const CST=(function(){
+  const box=$('#cs'),ts=$('#ts'),core=$('#cscore');let state='current',timers=[];
+  const MAP={'SAP B1':['S/4HANA Manufacturing (PP/QM)','S/4HANA production &amp; quality (PP/QM) for the 5 manufacturing companies'],'TMS':['S/4HANA Transportation Mgmt','S/4HANA Transportation Management'],'PPS':['Repackaging: PP-PI process orders + EWM','repackaging bulk into bags with PP-PI process orders, executed in EWM'],'EDS':['Intl Trade docs + Trade Finance (LCs)','export documents in S/4HANA International Trade, letters of credit in S/4HANA Trade Finance'],'CRM':['S/4HANA SO/PO + Business Partner','sales and purchase orders in Fiori (back-to-back) + Business Partner customer records'],'Visual Compliance':['SAP GTS sanctioned-party screening','SAP GTS sanctioned-party screening (GTS can run co-deployed on S/4HANA)'],'AP Workflow':['Invoice &amp; payment approval workflow','supplier invoice and payment approval with flexible workflow, quantity pricing via condition scales'],'Treasury Xpress':['Bank comms (BCM) + Multi-Bank Connectivity','payment formats, bank master and Bank Communication Mgmt, connected through Multi-Bank Connectivity']};
+  const KEEP={};
+  const ORDER=['SAP B1','TMS','PPS','EDS','CRM','Visual Compliance','AP Workflow','Treasury Xpress'];
+  const rows={};$$('.csr',box).forEach(r=>{const n=r.querySelector('b').textContent.trim();if(MAP[n]){r.dataset.to=MAP[n][0].replace(/&amp;/g,'&');rows[n]=r}});
+  let k=0;$$('.ab,.ab2,.ax,.arow>span:not(.al),.abase span',ts).forEach(e=>e.style.setProperty('--k',k++));
+  const info=$('#csInfo'),info0=info.innerHTML;
+  const T=(ms,f)=>timers.push(setTimeout(f,ms));
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+  function count(from,to){const el=$('#csN');const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(from+(to-from)*p);if(p<1)requestAnimationFrame(f)})(t0)}
+  function labels(st){const tg=st==='target';$('#csEy').textContent=tg?'Vinmar tomorrow · target state':'Vinmar today · current state';$('#csH').textContent=tg?'Target state: one S/4HANA digital core':'Current state: SAP ECC 6.0 landscape and connected systems';
+    $('#csNl').innerHTML=tg?'connected systems<br>8 apps can retire into the core':'connected systems<br>around one ECC core';$('#csSrc').textContent=tg?'Indicative target architecture. The 8-month plan converts ECC to S/4HANA; dashed items are future opportunities with separate scope.':'Source: Vinmar landscape as shared, Nov 2026';
+    $$('#csSeg button').forEach(b=>b.setAttribute('aria-selected',b.dataset.st===st))}
+  function drawT(){const svg=$('#tslines'),tc=$('#tcore');if(ts.hidden||!ts.offsetWidth||getComputedStyle(svg).display==='none')return;const B=ts.getBoundingClientRect(),C=tc.getBoundingClientRect();let h='<defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--sage)"/></marker></defs>';
+    const cy=C.top+C.height/2-B.top;
+    $$('.ax',ts).forEach((g,i)=>{const r=g.getBoundingClientRect(),x1=r.right-B.left,y1=r.top+r.height/2-B.top,x2=C.left-B.left-2,y2=cy+(i-2.5)*5,mx=(x1+x2)/2;h+=`<path class="dash" d="M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}" marker-end="url(#arw)" marker-start="url(#arw)"/>`});
+    $$('.ab2',ts).forEach((g,i)=>{const r=g.getBoundingClientRect(),x1=r.left-B.left,y1=r.top+r.height/2-B.top,x2=C.right-B.left+2,y2=cy+(i-1.5)*6,mx=(x1+x2)/2;h+=`<path class="${g.classList.contains('ext')?'':'dash'}" d="M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}" marker-end="url(#arw)" marker-start="url(#arw)"/>`});
+    const lx=C.left-B.left-8;h+=`<circle cx="${C.left-B.left}" cy="${cy}" r="5" fill="var(--accent)"/><circle cx="${C.right-B.left}" cy="${cy}" r="5" fill="var(--accent)"/>`;
+    svg.innerHTML=h}
+  function showTarget(anim){box.hidden=true;ts.hidden=false;ts.classList.remove('go');void ts.offsetWidth;if(anim)ts.classList.add('go');requestAnimationFrame(drawT);setTimeout(drawT,700);skipBtn(false)}
+  function resetCurrent(){$$('.csr',box).forEach(r=>{r.classList.remove('now','gone','map');r.style.transform=''});$$('.csg',box).forEach(g=>{g.classList.remove('empty','retire')});const b=core.querySelector('b'),e=core.querySelector('em');b.textContent='SAP ECC 6.0';e.textContent='EHP 8';b.style.opacity=1;box.classList.remove('fadeout','mapping','morphed');info.classList.remove('big');info.innerHTML=info0}
+  function skipBtn(on){let sb=$('#skipM');if(!sb){sb=document.createElement('button');sb.id='skipM';sb.className='btn ghost skipm';sb.textContent='Skip ▸';sb.onclick=()=>{clear();count(+$('#csN').textContent,6);showTarget(true)};$('.csctl').prepend(sb)}sb.style.display=on?'':'none'}
+  function fly(r){const C=core.getBoundingClientRect(),R=r.getBoundingClientRect();r.style.transform=`translate(${C.left+C.width/2-(R.left+R.width/2)}px,${C.top+C.height/2-(R.top+R.height/2)}px) scale(.3)`;r.classList.add('gone');
+    const g=r.closest('.csg');if(g&&[...g.querySelectorAll('.csr')].every(x=>x.classList.contains('gone')))T(700,()=>g.classList.add('empty'))}
+  function set(st,anim){clear();if(st===state&&!anim){if(st==='target')showTarget(false);return}
+    const prev=state;state=st;labels(st);
+    if(st==='current'){ts.hidden=true;resetCurrent();box.hidden=false;skipBtn(false);if(prev!=='current')count(6,14);CS.show();history.replaceState(null,'','#current');return}
+    history.replaceState(null,'','#current-target');
+    if(!anim){box.hidden=true;$('#csN').textContent=6;showTarget(false);return}
+    resetCurrent();box.hidden=false;ts.hidden=true;skipBtn(true);box.classList.add('mapping');info.classList.add('big');
+    let t=200;
+    T(t,()=>{info.innerHTML='<b>SAP ECC 6.0 → SAP S/4HANA</b> brownfield conversion<span class="fx in">In scope</span>'});
+    T(t+=1200,()=>{const b=core.querySelector('b'),e=core.querySelector('em');b.style.transition='opacity .35s';b.style.opacity=0;setTimeout(()=>{b.textContent='SAP S/4HANA';e.textContent='Private Cloud · RISE';b.style.opacity=1},350);box.classList.add('morphed')});
+    t+=1900;
+    ORDER.forEach(n=>{const r=rows[n];if(!r)return;
+      T(t,()=>{$$('.csr.now',box).forEach(x=>x.classList.remove('now'));r.classList.add('now','map');info.innerHTML=`<b>${n}</b> → ${MAP[n][1]}<span class="fx${KEEP[n]?' in':''}">${KEEP[n]?'In scope':'Future scope'}</span>`});
+      T(t+1500,()=>{r.classList.remove('now');if(!KEEP[n]){fly(r);count(+$('#csN').textContent,+$('#csN').textContent-1)}});
+      t+=2100});
+    T(t,()=>{info.innerHTML='<b>8 third-party apps</b> can retire into one S/4HANA digital core'});
+    T(t+=2200,()=>box.classList.add('fadeout'));
+    T(t+=450,()=>showTarget(true));
+  }
+  $$('#csSeg button').forEach(b=>b.onclick=()=>set(b.dataset.st,true));
+  addEventListener('resize',()=>{if(state==='target'&&$('#v-current').classList.contains('active'))drawT()});
+  return {set,get state(){return state}};
+})();window.CSTo=CST;if(location.hash==='#current-target')CST.set('target',false);
+(function(){const l=$('#v-plan .legend.plg'),f=$('#v-plan .gfoot');if(l&&f){f.appendChild(l);f.style.display='flex';f.style.justifyContent='space-between';f.style.alignItems='center';f.style.gap='12px';f.style.flexWrap='wrap'}})();
+/* DOCK auto-hide: only the very bottom edge (or the handle) reveals it */
+(function(){const d=$('.dock'),pk=$('#dpeek');if(!d)return;const fine=matchMedia('(hover:hover) and (pointer:fine) and (min-width:761px)');let t=null;
+ const vis=()=>!d.classList.contains('hid');
+ function hide(){clearTimeout(t);if(!fine.matches||d.matches(':hover')||d.contains(document.activeElement))return;d.classList.add('hid');document.body.classList.add('dockhid')}
+ function showD(){clearTimeout(t);d.classList.remove('hid');document.body.classList.remove('dockhid')}
+ addEventListener('mousemove',e=>{if(!fine.matches)return;const edge=e.clientY>=innerHeight-14;
+   if(edge){showD();return}
+   if(vis()){const r=d.getBoundingClientRect();const near=e.clientX>r.left-20&&e.clientX<r.right+20&&e.clientY>r.top-16;if(!near){clearTimeout(t);t=setTimeout(hide,120)}}},{passive:true});
+ pk&&pk.addEventListener('mouseenter',showD);pk&&pk.addEventListener('click',showD);
+ d.addEventListener('focusin',showD);d.addEventListener('focusout',()=>{t=setTimeout(hide,300)});
+ d.addEventListener('click',e=>{if(e.target.closest('a')){setTimeout(()=>{if(!d.matches(':hover'))hide()},250)}});
+ document.addEventListener('mouseleave',()=>{t=setTimeout(hide,200)});
+ showD();t=setTimeout(hide,1800);
 })();
 /* AUTO-FIT: shrink content so each view fits without scrolling */
 function fitBox(box,inner,min){if(!box||!inner)return;inner.style.zoom=1;let z=1;let n=0;while(box.scrollHeight>box.clientHeight&&z>min&&n<20){z=Math.round((z-.03)*100)/100;inner.style.zoom=z;n++}}
 function autoFit(){if(innerWidth<1024)return;const v=document.querySelector('.view.active');if(!v||v.id==='v-home')return;
   if(v.id==='v-benefits')fitBox(v.querySelector('.modpanel'),$('#modbody'),.6);
-  const sc=v.querySelector('.screen'),w=sc&&sc.querySelector(':scope>.wrap');if(sc&&w&&v.id!=='v-current'&&v.id!=='v-plan')fitScreen(sc,w,.72)}
+  const sc=v.querySelector('.screen'),w=sc&&sc.querySelector(':scope>.wrap');if(sc&&w&&v.id!=='v-current'&&v.id!=='v-plan'&&v.id!=='v-next')fitScreen(sc,w,.72)}
 function overBy(sc,w){const lim=sc.getBoundingClientRect().bottom-parseFloat(getComputedStyle(sc).paddingBottom);let mb=0;w.querySelectorAll('.card,.note,.gfoot,.kp,.vhead').forEach(e=>{if(e.closest('svg,[hidden]'))return;const r=e.getBoundingClientRect();if(r.height&&r.width)mb=Math.max(mb,r.bottom)});return mb-lim}
 function fitScreen(sc,w,min){w.style.zoom=1;let z=1,n=0;while((overBy(sc,w)>1||sc.scrollHeight>sc.clientHeight+1)&&z>min&&n<12){z=Math.round((z-.03)*100)/100;w.style.zoom=z;n++}}
 var afT=null;function autoFitSoon(d){clearTimeout(afT);afT=setTimeout(autoFit,d==null?60:d)}
@@ -1873,9 +2150,12 @@ addEventListener('keydown',e=>{
   
   else if(k==='t'||k==='T')$('#bTheme').click();
   else if(k==='?')openOv('help');
+  else if(k==='f'||k==='F')toggleFS();
+  else if(k==='m'||k==='M'){reduced=!reduced;try{localStorage.setItem('vin-rm',reduced?'1':'0')}catch(_){}document.documentElement.classList.toggle('rm',reduced);hud(reduced?'Animations off':'Animations on')}
+  else if((k==='PageDown'||k==='PageUp'||((k==='ArrowRight'||k==='ArrowLeft')&&curView!=='plan')||(k===' '&&curView!=='plan'))){e.preventDefault();const d=(k==='PageUp'||k==='ArrowLeft')?-1:1;const i=clamp(VIEWS.indexOf(curView)+d,0,VIEWS.length-1);location.hash='#'+VIEWS[i];hud(`${i+1}/${VIEWS.length} · ${VNAME[VIEWS[i]]}`)}
   else if((k==='ArrowRight'||k==='ArrowLeft')&&curView==='plan'){e.preventDefault();const d=k==='ArrowRight'?1:-1;Plan.openPhase(Plan.open<0?(d>0?0:PHASES.length-1):Plan.open+d,true)}
 });
-mq.addEventListener&&mq.addEventListener('change',e=>{reduced=e.matches});
+
 })();
 </script>
 </body>
